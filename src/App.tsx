@@ -1,34 +1,25 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
+
+import { CreateMon } from "./components/CreateMon";
+import { Mons } from "./components/Mons";
+
 import "./App.css";
 
 function App() {
+  const [hasMons, setHasMons] = useState(false);
+
   useEffect(() => {
-    const myStorage = window.localStorage;
-
-    if (myStorage.length === 0) {
-      myStorage.setItem("name", "Andrew");
-    }
-
-    console.log(myStorage);
+    // TODO: More validation on storage data
+    setHasMons(window.localStorage.length !== 0);
   }, []);
 
+  useEffect(() => {
+    console.log(window.localStorage);
+  }, [hasMons]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {hasMons ? <Mons /> : <CreateMon setHasMons={setHasMons} />}
     </div>
   );
 }
