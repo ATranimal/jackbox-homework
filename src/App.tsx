@@ -13,10 +13,6 @@ function App() {
     setHasMons(window.localStorage.length !== 0);
   }, []);
 
-  useEffect(() => {
-    console.log(window.localStorage);
-  }, [hasMons]);
-
   return (
     <div className="app">
       {hasMons ? <Mons /> : <CreateMon setHasMons={setHasMons} />}
