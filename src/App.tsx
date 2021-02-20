@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { CreateMon } from "./components/CreateMon";
 import { Mons } from "./components/Mons";
+import { checkForExistingData } from "./util/Storage";
 
 import "./App.css";
 
@@ -9,8 +10,7 @@ function App() {
   const [hasMons, setHasMons] = useState(false);
 
   useEffect(() => {
-    // TODO: More validation on storage data
-    setHasMons(window.localStorage.length !== 0);
+    setHasMons(checkForExistingData());
   }, []);
 
   return (

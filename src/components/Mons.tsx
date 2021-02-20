@@ -34,7 +34,11 @@ export const Mons = () => {
 
       <YoutubeLink link={youtubeLink} setLink={setYoutubeLink} />
 
-      <SubmitButton link={youtubeLink} monName={monData.name} />
+      <SubmitButton
+        link={youtubeLink}
+        monName={monData.name}
+        setMonData={setMonData}
+      />
     </div>
   );
 };

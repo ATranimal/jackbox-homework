@@ -1,31 +1,50 @@
 import { getStatsFromYoutubeLink } from "../api/api";
+import { blankMonData, MonData } from "../models/Mon";
+import {
+  addToMonStats,
+  checkForExistingData,
+  getMonStatsAsInt,
+  setMonName,
+  setMonStats,
+} from "../util/Storage";
 
 interface SubmitButtonProps {
   link: string;
   monName: string;
   setHasMons?: React.Dispatch<boolean>;
+  setMonData?: React.Dispatch<MonData>;
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { link, monName, setHasMons } = props;
+  const { link, monName, setHasMons, setMonData } = props;
 
-  const initiateMonData = async () => {
+  const initializeMonData = async () => {
+    const myStorage = window.localStorage;
+
+    setMonName(monName);
+    setMonStats(blankMonData.stats);
+    setHasMons?.(true);
+  };
+
+  const getAndAddMonData = async () => {
     const myStorage = window.localStorage;
 
     const monStats = await getStatsFromYoutubeLink(link);
 
-    myStorage.setItem("name", monName);
-    myStorage.setItem("formality", monStats.formality.toString());
-    myStorage.setItem("curiousity", monStats.curiousity.toString());
-    myStorage.setItem("creativity", monStats.creativity.toString());
-
-    setHasMons?.(true);
+    addToMonStats(monStats);
+    setMonData?.({
+      name: monName,
+      stats: getMonStatsAsInt(),
+    });
   };
 
   return (
     <button
       onClick={() => {
-        initiateMonData();
+        if (!checkForExistingData()) {
+          initializeMonData();
+        }
+        getAndAddMonData();
       }}
     >
       Create a mon from link data
