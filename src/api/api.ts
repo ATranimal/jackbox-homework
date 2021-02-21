@@ -13,9 +13,11 @@ export const getStatsFromYoutubeLink = async (
 
   // return body;
   const stats: MonStats = {
+    level: 1,
     formality: 1,
     curiousity: 1,
     creativity: 1,
+    compassion: 1,
   };
 
   return stats;

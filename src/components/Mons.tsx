@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { blankMonData, MonData } from "../models/Mon";
+import { getMonStatsAsInt } from "../util/Storage";
 import { SubmitButton } from "./SubmitButton";
 import { YoutubeLink } from "./YoutubeLink";
 
@@ -13,11 +14,7 @@ export const Mons = () => {
 
     const storageMonData: MonData = {
       name: myStorage.getItem("name") as string,
-      stats: {
-        formality: parseInt(myStorage.getItem("formality") as string),
-        curiousity: parseInt(myStorage.getItem("curiousity") as string),
-        creativity: parseInt(myStorage.getItem("creativity") as string),
-      },
+      stats: getMonStatsAsInt(),
     };
 
     setMonData(storageMonData);
@@ -27,9 +24,11 @@ export const Mons = () => {
     <div className="mons-container">
       <div className="mons-data">
         <div className="name">{monData.name}</div>
-        <div className="formality">{monData.stats.formality}</div>
-        <div className="curiousity">{monData.stats.curiousity}</div>
-        <div className="creativity">{monData.stats.creativity}</div>
+        <div className="level">Level: {monData.stats.level}</div>
+        <div className="formality">Formality: {monData.stats.formality}</div>
+        <div className="curiousity">Curiousity: {monData.stats.curiousity}</div>
+        <div className="creativity">Creativity: {monData.stats.creativity}</div>
+        <div className="compassion">Compassion: {monData.stats.compassion}</div>
       </div>
 
       <YoutubeLink link={youtubeLink} setLink={setYoutubeLink} />

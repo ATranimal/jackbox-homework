@@ -6,7 +6,14 @@ export const checkForExistingData = (): boolean => {
   let validStorage = true;
 
   // TODO: Abstract these keys
-  const localStorageKeys = ["name", "formality", "curiousity", "creativity"];
+  const localStorageKeys = [
+    "name",
+    "level",
+    "formality",
+    "curiousity",
+    "creativity",
+    "compassion",
+  ];
 
   localStorageKeys.forEach((key: string) => {
     // TODO: Validation on local storage values
@@ -27,16 +34,19 @@ export const setMonName = (name: string) => {
 export const setMonStats = (stats: MonStats) => {
   const myStorage = window.localStorage;
 
+  myStorage.setItem("level", stats.level.toString());
   myStorage.setItem("formality", stats.formality.toString());
   myStorage.setItem("curiousity", stats.curiousity.toString());
   myStorage.setItem("creativity", stats.creativity.toString());
+  myStorage.setItem("compassion", stats.compassion.toString());
 };
 
 export const addToMonStats = (stats: MonStats) => {
   const myStorage = window.localStorage;
 
   const storageMonData = getMonStatsAsInt();
-  // TODO:
+
+  myStorage.setItem("level", (storageMonData.level + stats.level).toString());
   myStorage.setItem(
     "formality",
     (storageMonData.formality + stats.formality).toString()
@@ -49,6 +59,10 @@ export const addToMonStats = (stats: MonStats) => {
     "creativity",
     (storageMonData.creativity + stats.creativity).toString()
   );
+  myStorage.setItem(
+    "compassion",
+    (storageMonData.compassion + stats.compassion).toString()
+  );
 };
 
 export const getMonStatsAsInt = (): MonStats => {
@@ -58,9 +72,11 @@ export const getMonStatsAsInt = (): MonStats => {
 
   try {
     monStats = {
+      level: parseInt(myStorage.getItem("level") as string),
       formality: parseInt(myStorage.getItem("formality") as string),
       curiousity: parseInt(myStorage.getItem("curiousity") as string),
       creativity: parseInt(myStorage.getItem("creativity") as string),
+      compassion: parseInt(myStorage.getItem("compassion") as string),
     };
   } catch (e) {
     console.log(e);
