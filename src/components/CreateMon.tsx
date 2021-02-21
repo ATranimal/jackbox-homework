@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { getStatsFromYoutubeLink } from "../api/api";
 import { YoutubeLink } from "./YoutubeLink";
 import { SubmitButton } from "./SubmitButton";
 

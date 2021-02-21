@@ -1,4 +1,4 @@
-import { getStatsFromYoutubeLink } from "../api/api";
+import { getStatsFromYoutubeID } from "../api/api";
 import { blankMonData, MonData } from "../models/Mon";
 import {
   addToMonStats,
@@ -29,7 +29,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const getAndAddMonData = async () => {
     const myStorage = window.localStorage;
 
-    const monStats = await getStatsFromYoutubeLink(link);
+    const monStats = await getStatsFromYoutubeID(link);
 
     addToMonStats(monStats);
     setMonData?.({

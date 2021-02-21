@@ -1,24 +1,14 @@
 import { MonStats } from "../models/Mon";
 
-export const getStatsFromYoutubeLink = async (
-  youtubeLink: string
+export const getStatsFromYoutubeID = async (
+  youtubeID: string
 ): Promise<MonStats> => {
-  // const response = await fetch("api/url", {
-  //   body: JSON.stringify({
-  //     link: youtubeLink,
-  //   }),
-  // });
+  const response = await fetch(
+    process.env.REACT_APP_BACKEND_URL + "/stats/" + youtubeID
+  );
 
-  // const body = await response.json();
+  // TODO: Add type validation on response here
+  const body = await response.json();
 
-  // return body;
-  const stats: MonStats = {
-    level: 1,
-    formality: 1,
-    curiousity: 1,
-    creativity: 1,
-    compassion: 1,
-  };
-
-  return stats;
+  return body;
 };
