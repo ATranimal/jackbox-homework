@@ -1,6 +1,6 @@
 import { blankMonData, MonStats } from "../models/Mon";
 
-export const checkForExistingData = (): boolean => {
+export const checkForExistingDataInStorage = (): boolean => {
   const myStorage = window.localStorage;
 
   let validStorage = true;
@@ -25,13 +25,13 @@ export const checkForExistingData = (): boolean => {
   return validStorage;
 };
 
-export const setMonName = (name: string) => {
+export const setMonNameInStorage = (name: string) => {
   const myStorage = window.localStorage;
 
   myStorage.setItem("name", name);
 };
 
-export const setMonStats = (stats: MonStats) => {
+export const setMonStatsInStorage = (stats: MonStats) => {
   const myStorage = window.localStorage;
 
   myStorage.setItem("level", stats.level.toString());
@@ -41,10 +41,10 @@ export const setMonStats = (stats: MonStats) => {
   myStorage.setItem("compassion", stats.compassion.toString());
 };
 
-export const addToMonStats = (stats: MonStats) => {
+export const addToMonStatsInStorage = (stats: MonStats) => {
   const myStorage = window.localStorage;
 
-  const storageMonData = getMonStatsAsInt();
+  const storageMonData = getMonStatsAsIntFromStorage();
 
   myStorage.setItem("level", (storageMonData.level + stats.level).toString());
   myStorage.setItem(
@@ -65,7 +65,7 @@ export const addToMonStats = (stats: MonStats) => {
   );
 };
 
-export const getMonStatsAsInt = (): MonStats => {
+export const getMonStatsAsIntFromStorage = (): MonStats => {
   const myStorage = window.localStorage;
 
   let monStats: MonStats = blankMonData.stats;

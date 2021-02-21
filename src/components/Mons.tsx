@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { blankMonData, MonData } from "../models/Mon";
-import { getMonStatsAsInt } from "../util/Storage";
+import { getMonStatsAsIntFromStorage } from "../util/Storage";
 import { SubmitButton } from "./SubmitButton";
 import { YoutubeLink } from "./YoutubeLink";
 
@@ -14,7 +14,7 @@ export const Mons = () => {
 
     const storageMonData: MonData = {
       name: myStorage.getItem("name") as string,
-      stats: getMonStatsAsInt(),
+      stats: getMonStatsAsIntFromStorage(),
     };
 
     setMonData(storageMonData);
@@ -35,6 +35,7 @@ export const Mons = () => {
 
       <SubmitButton
         link={youtubeLink}
+        buttonText={"Level up your mon with a youtube link"}
         monName={monData.name}
         setMonData={setMonData}
       />

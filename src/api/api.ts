@@ -7,8 +7,14 @@ export const getStatsFromYoutubeID = async (
     process.env.REACT_APP_BACKEND_URL + "/stats/" + youtubeID
   );
 
-  // TODO: Add type validation on response here
-  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(
+      "Error parsing the youtube URL. Make sure it's the simplest format if possible!"
+    );
+  } else {
+    // TODO: Add type validation on response here
+    const body = await response.json();
 
-  return body;
+    return body;
+  }
 };

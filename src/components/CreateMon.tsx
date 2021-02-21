@@ -11,7 +11,7 @@ interface CreateMonProps {
 export const CreateMon = (props: CreateMonProps) => {
   const { setHasMons } = props;
 
-  const [monName, setMonName] = useState("");
+  const [monName, setMonNameInStorage] = useState("");
   const [youtubeLink, setYoutubeLink] = useState("");
 
   return (
@@ -20,7 +20,7 @@ export const CreateMon = (props: CreateMonProps) => {
       <input
         value={monName}
         onChange={(e) => {
-          setMonName(e.target.value);
+          setMonNameInStorage(e.target.value);
         }}
       ></input>
 
@@ -28,6 +28,7 @@ export const CreateMon = (props: CreateMonProps) => {
 
       <SubmitButton
         link={youtubeLink}
+        buttonText={"Create a mon from a youtube link"}
         monName={monName}
         setHasMons={setHasMons}
       />

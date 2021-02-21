@@ -1,53 +1,70 @@
 import { getStatsFromYoutubeID } from "../api/api";
 import { blankMonData, MonData } from "../models/Mon";
 import {
-  addToMonStats,
-  checkForExistingData,
-  getMonStatsAsInt,
-  setMonName,
-  setMonStats,
+  addToMonStatsInStorage,
+  checkForExistingDataInStorage,
+  getMonStatsAsIntFromStorage,
+  setMonNameInStorage,
+  setMonStatsInStorage,
 } from "../util/Storage";
 
 interface SubmitButtonProps {
   link: string;
+  buttonText: string;
   monName: string;
   setHasMons?: React.Dispatch<boolean>;
   setMonData?: React.Dispatch<MonData>;
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { link, monName, setHasMons, setMonData } = props;
+  const { link, buttonText, monName, setHasMons, setMonData } = props;
 
   const initializeMonData = async () => {
-    const myStorage = window.localStorage;
-
-    setMonName(monName);
-    setMonStats(blankMonData.stats);
+    setMonNameInStorage(monName);
+    setMonStatsInStorage(blankMonData.stats);
     setHasMons?.(true);
   };
 
   const getAndAddMonData = async () => {
-    const myStorage = window.localStorage;
+    const id = parseIDfromYoutubeLink(link);
 
-    const monStats = await getStatsFromYoutubeID(link);
+    try {
+      const monStats = await getStatsFromYoutubeID(id);
 
-    addToMonStats(monStats);
-    setMonData?.({
-      name: monName,
-      stats: getMonStatsAsInt(),
-    });
+      // If this is the first run, make sure the
+      if (!checkForExistingDataInStorage()) {
+        initializeMonData();
+      }
+
+      addToMonStatsInStorage(monStats);
+      setMonData?.({
+        name: monName,
+        stats: getMonStatsAsIntFromStorage(),
+      });
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const parseIDfromYoutubeLink = (link: string): string => {
+    const rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    const id = link.match(rx);
+
+    if (id?.[1]?.length === 11) {
+      return id[1];
+    } else {
+      return "";
+    }
   };
 
   return (
     <button
       onClick={() => {
-        if (!checkForExistingData()) {
-          initializeMonData();
-        }
         getAndAddMonData();
       }}
     >
-      Create a mon from link data
+      {buttonText}
     </button>
   );
 };
