@@ -8,16 +8,26 @@ import {
   setMonStatsInStorage,
 } from "../util/Storage";
 
+import "./SubmitButton.scss";
+
 interface SubmitButtonProps {
   link: string;
   buttonText: string;
   monName: string;
   setHasMons?: React.Dispatch<boolean>;
   setMonData?: React.Dispatch<MonData>;
+  setYoutubeLink?: React.Dispatch<string>;
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { link, buttonText, monName, setHasMons, setMonData } = props;
+  const {
+    link,
+    buttonText,
+    monName,
+    setHasMons,
+    setMonData,
+    setYoutubeLink,
+  } = props;
 
   const initializeMonData = async () => {
     setMonNameInStorage(monName);
@@ -31,7 +41,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     try {
       const monStats = await getStatsFromYoutubeID(id);
 
-      // If this is the first run, make sure the
+      // If this is the first run, make sure the local storage variables exist
       if (!checkForExistingDataInStorage()) {
         initializeMonData();
       }
@@ -41,6 +51,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
         name: monName,
         stats: getMonStatsAsIntFromStorage(),
       });
+      setYoutubeLink?.("");
     } catch (e) {
       alert(e);
     }
@@ -59,12 +70,15 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   };
 
   return (
-    <button
-      onClick={() => {
-        getAndAddMonData();
-      }}
-    >
-      {buttonText}
-    </button>
+    <div className="submit-button">
+      <button
+        onClick={() => {
+          getAndAddMonData();
+        }}
+        disabled={monName.length === 0 && link.length === 0}
+      >
+        {buttonText}
+      </button>
+    </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { YoutubeLink } from "./YoutubeLink";
+import { TextInput } from "./TextInput";
 import { SubmitButton } from "./SubmitButton";
 
 import "./CreateMon.scss";
@@ -11,24 +11,22 @@ interface CreateMonProps {
 export const CreateMon = (props: CreateMonProps) => {
   const { setHasMons } = props;
 
-  const [monName, setMonNameInStorage] = useState("");
+  const [monName, setMonName] = useState("");
   const [youtubeLink, setYoutubeLink] = useState("");
 
   return (
     <div className="mons-start-container">
-      <label htmlFor="">Name</label>
-      <input
-        value={monName}
-        onChange={(e) => {
-          setMonNameInStorage(e.target.value);
-        }}
-      ></input>
-
-      <YoutubeLink link={youtubeLink} setLink={setYoutubeLink} />
+      <h1> Youtube-mon Daycare </h1>
+      <TextInput text={monName} setText={setMonName} labelText={"Name"} />
+      <TextInput
+        text={youtubeLink}
+        setText={setYoutubeLink}
+        labelText={"Youtube Link"}
+      />
 
       <SubmitButton
         link={youtubeLink}
-        buttonText={"Create a mon from a youtube link"}
+        buttonText={"Create your Youtube-mon!"}
         monName={monName}
         setHasMons={setHasMons}
       />

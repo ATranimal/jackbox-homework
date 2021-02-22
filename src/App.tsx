@@ -4,7 +4,7 @@ import { CreateMon } from "./components/CreateMon";
 import { Mons } from "./components/Mons";
 import { checkForExistingDataInStorage } from "./util/Storage";
 
-import "./App.css";
+import "./App.scss";
 
 function App() {
   const [hasMons, setHasMons] = useState(false);

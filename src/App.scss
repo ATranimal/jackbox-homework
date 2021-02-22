@@ -1,0 +1,37 @@
+.app {
+  text-align: center;
+  margin: 0 10%;
+}
+
+label {
+  color: #04151c;
+  text-align: left;
+}
+
+input {
+  margin: 1em 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border: 0.15em solid #04151c;
+}
+
+button {
+  margin: 1em 0;
+  background-color: #c9e9e8;
+  border-radius: 0.5em;
+  border: 0.15em solid #04151c;
+  padding: 0.5em;
+
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #fafefe;
+    cursor: not-allowed;
+  }
+
+  &:hover:enabled {
+    background-color: #defaf9;
+  }
+
+  transition: background-color 0.25s;
+}

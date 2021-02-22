@@ -85,3 +85,7 @@ export const getMonStatsAsIntFromStorage = (): MonStats => {
 
   return monStats;
 };
+
+export const clearStorage = () => {
+  window.localStorage.clear();
+};
